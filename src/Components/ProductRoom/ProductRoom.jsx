@@ -16,7 +16,10 @@ import {
 } from "../../redux/slices/loadingSlice";
 import { layDuLieuLocal } from "../../util/localStorage";
 import { getInfoUserApi } from "../../redux/slices/adminUserSlices";
-import { findRoomUser } from "../../redux/slices/commentUserSlice";
+import {
+  findRoomUser,
+  getAllCommentApi,
+} from "../../redux/slices/commentUserSlice";
 import { DOMAIN_BE_IMG } from "../../util/constants";
 // import { click } from "@testing-library/user-event/dist/click";
 
@@ -28,10 +31,13 @@ const breakPoints = [
 ];
 
 const ProductRoom = () => {
-  const maNguoiDung = layDuLieuLocal("user")?.user?.id;
+  const maNguoiDung = layDuLieuLocal("user")?.content?.user?.id;
+  // console.log(maNguoiDung);
   const dispatch = useDispatch();
   const { arrayRoom } = useSelector((state) => state.room);
+  const { arrCommentMaPhong } = useSelector((state) => state.commentUser);
   // console.log(arrayRoom);
+  // console.log(arrCommentMaPhong);
   // const { inFo } = useSelector((state) => state.user);
   //   console.log("room: ", room);
   // const checkLogin = () => {
@@ -42,10 +48,28 @@ const ProductRoom = () => {
   //   }
   // }
 
+  const getRate = (id) => {
+    let arr = [];
+    let value = arrCommentMaPhong.find((item) => {
+      // return id == item.room_id;
+      if (id == item.room_id) {
+        arr.push(item);
+      }
+    });
+    // console.log("arr", arr);
+    if (arr) {
+      let totalRate = arr.reduce((total, item, index) => {
+        return (total += item.rate);
+      }, 0);
+      return (totalRate / arr.length).toFixed(1);
+    }
+  };
   useEffect(() => {
     dispatch(set_loading_started());
-    dispatch(getAllRoomAPI());
     dispatch(set_loading_end());
+    dispatch(getAllRoomAPI());
+    dispatch(getAllCommentApi());
+
     dispatch(getInfoUserApi(maNguoiDung));
   }, []);
 
@@ -75,9 +99,10 @@ const ProductRoom = () => {
                   </span>{" "}
                   {name_room}
                 </h3>
+
                 <p className="flex items-center mr-3 ">
                   <AiTwotoneStar className="icon mr-1 duration-500 cursor-pointer" />{" "}
-                  5.00
+                  {getRate(id)}
                 </p>
               </div>
               <div className="ml-2 mt-2 laptop:flex items-center justify-between">

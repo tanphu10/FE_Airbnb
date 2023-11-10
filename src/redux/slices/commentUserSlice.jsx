@@ -69,6 +69,9 @@ export const commentUserSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getAllCommentApi.fulfilled, (state, action) => {
+      state.arrCommentMaPhong = action.payload;
+    });
     builder.addCase(getCommentRoom.fulfilled, (state, action) => {
       state.arrComment = action.payload;
     });

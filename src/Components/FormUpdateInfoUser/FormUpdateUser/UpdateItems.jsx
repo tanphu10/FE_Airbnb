@@ -19,10 +19,10 @@ const UpdateItems = () => {
   const formik = useFormik({
     initialValues: {
       id: " ",
-      name: " ",
+      full_name: " ",
       email: " ",
-      matKhau: " ",
-      birthday: "",
+      pass_word: " ",
+      birth_day: "",
       phone: " ",
       gender: true,
       role: " ",
@@ -37,15 +37,12 @@ const UpdateItems = () => {
         .string()
         .email("Please input email!")
         .required("please fill in the input box"),
-      matKhau: yup
+      pass_word: yup
         .string()
         .required("please fill in the input box")
         .min(6, "please input minimum 6 letter"),
-      // <<<<<<< HEAD
       // birthday: yup.date().required("Please fill in the input date"),
-      // =======
       birthday: yup.date().required("Please fill in the input date"),
-      // >>>>>>> dd97cdc1e8ff43fcf96d0f40ebdf8e5266ecb5bb
       phone: yup
         .string()
         .matches(/^[0-9]*$/, "please fill in the input number")
@@ -60,15 +57,15 @@ const UpdateItems = () => {
     }),
     // async &await khác với .then.catch khác nhau ở chổ là nếu như .then.catch phải lồng vào nhau
     onSubmit: async (values) => {
-      // console.log(values);
+      console.log(values);
       try {
         // xử lí gửi dữ liệu lên server
         const res = await adminUser.adminUserIdPut(
-          layDuLieuLocal("user").user.id,
+          layDuLieuLocal("user").content.user.id,
           values
         );
-        // console.log(res);
-        dispatch(getInfoUserApi(layDuLieuLocal("user").user.id));
+        console.log(res);
+        dispatch(getInfoUserApi(layDuLieuLocal("user").content.user.id));
         messageApi.success("update thành công");
       } catch (error) {
         console.log(error);
@@ -78,9 +75,9 @@ const UpdateItems = () => {
         values: {
           id: "",
           email: "",
-          password: "",
-          birthday: "",
-          name: "",
+          pass_word: "",
+          birth_day: "",
+          full_name: "",
           phone: "",
           role: "",
           gender: true,
@@ -119,15 +116,15 @@ const UpdateItems = () => {
         <div className="relative z-0 w-full mb-3 group">
           <input
             type="text"
-            name="name"
+            name="full_name"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.name}
+            value={values.full_name}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
           />
-          {formik.errors.name && formik.touched.name ? (
-            <p className="text-red-600">{formik.errors.name}</p>
+          {formik.errors.full_name && formik.touched.full_name ? (
+            <p className="text-red-600">{formik.errors.full_name}</p>
           ) : (
             ""
           )}
@@ -135,7 +132,7 @@ const UpdateItems = () => {
             htmlFor="floating_email"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Name
+            full_name
           </label>
         </div>
         <div className="relative z-0 w-full mb-3 group">
@@ -143,13 +140,13 @@ const UpdateItems = () => {
             onChange={handleChange}
             onBlur={handleBlur}
             type="text"
-            name="matKhau"
-            value={values.matKhau}
+            name="pass_word"
+            value={values.pass_word}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" "
           />
-          {formik.errors.matKhau && formik.touched.matKhau ? (
-            <p className="text-red-600">{formik.errors.matKhau}</p>
+          {formik.errors.pass_word && formik.touched.pass_word ? (
+            <p className="text-red-600">{formik.errors.pass_word}</p>
           ) : (
             ""
           )}
@@ -211,15 +208,15 @@ const UpdateItems = () => {
           <div className="relative z-0 w-full mb-3 group">
             <input
               type="text"
-              name="birthday"
+              name="birth_day"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.birthday}
+              value={values.birth_day}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
             />
-            {formik.errors.birthday && formik.touched.birthday ? (
-              <p className="text-red-600">{formik.errors.birthday}</p>
+            {formik.errors.birth_day && formik.touched.birth_day ? (
+              <p className="text-red-600">{formik.errors.birth_day}</p>
             ) : (
               ""
             )}

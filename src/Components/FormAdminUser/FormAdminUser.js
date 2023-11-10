@@ -31,9 +31,9 @@ const FormAdminUser = () => {
     initialValues: {
       id: "",
       email: "",
-      password: "",
-      birthday: "",
-      name: "",
+      pass_word: "",
+      birth_day: "",
+      full_name: "",
       phone: "",
       role: "",
       gender: true,
@@ -48,9 +48,9 @@ const FormAdminUser = () => {
         .required("Vui lòng không bỏ trống!")
         .email("Phải là email!")
         .min(3, "Vui lòng nhập trên 3 ký tự"),
-      password: yup.string().required("Vui lòng không bỏ trống!"),
-      birthday: yup.date().required("Vui lòng không bỏ trống!"),
-      name: yup.string().required("Vui lòng không bỏ trống!"),
+      pass_word: yup.string().required("Vui lòng không bỏ trống!"),
+      birth_day: yup.date().required("Vui lòng không bỏ trống!"),
+      full_name: yup.string().required("Vui lòng không bỏ trống!"),
       phone: yup.number("Phải là số!").required("Vui lòng không bỏ trống!"),
       role: yup.string(),
       gender: yup.string(),
@@ -73,9 +73,9 @@ const FormAdminUser = () => {
         values: {
           id: "",
           email: "",
-          password: "",
-          birthday: "",
-          name: "",
+          pass_word: "",
+          birth_day: "",
+          full_name: "",
           phone: "",
           role: "",
           gender: true,
@@ -97,7 +97,7 @@ const FormAdminUser = () => {
       values: {
         id: "",
         email: "",
-        password: "",
+        pass_word: "",
         birthday: "",
         name: "",
         phone: "",
@@ -109,7 +109,7 @@ const FormAdminUser = () => {
   };
 
   const { handleSubmit, handleChange, handleBlur, values } = formik;
-  const { id, email, password, birthday, name, phone, role, gender } =
+  const { id, email, pass_word, birth_day, full_name, phone, role, gender } =
     formik.errors;
 
   return (
@@ -160,16 +160,16 @@ const FormAdminUser = () => {
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <input
-            value={values.password}
+            value={values.pass_word}
             onChange={handleChange}
             onBlur={handleBlur}
             type="text"
-            name="password"
-            id="password"
+            name="pass_word"
+            id="pass_word"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
-          {password && formik.touched.password ? (
-            <p className="text-red-500">{password}</p>
+          {pass_word && formik.touched.pass_word ? (
+            <p className="text-red-500">{pass_word}</p>
           ) : (
             ""
           )}
@@ -182,16 +182,16 @@ const FormAdminUser = () => {
         </div>
         <div className="relative z-0 w-full mb-6 group">
           <input
-            value={values.name}
+            value={values.full_name}
             onChange={handleChange}
             onBlur={handleBlur}
             type="text"
-            name="name"
-            id="name"
+            name="full_name"
+            id="full_name"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           />
-          {name && formik.touched.name ? (
-            <p className="text-red-500">{name}</p>
+          {full_name && formik.touched.full_name ? (
+            <p className="text-red-500">{full_name}</p>
           ) : (
             ""
           )}
@@ -205,16 +205,16 @@ const FormAdminUser = () => {
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-6 group">
             <input
-              value={values.birthday}
+              value={values.birth_day}
               onChange={handleChange}
               onBlur={handleBlur}
               type="text"
-              name="birthday"
+              name="birth_day"
               id="birthday"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             />
-            {birthday && formik.touched.birthday ? (
-              <p className="text-red-500">{birthday}</p>
+            {birth_day && formik.touched.birth_day ? (
+              <p className="text-red-500">{birth_day}</p>
             ) : (
               ""
             )}
@@ -293,7 +293,6 @@ const FormAdminUser = () => {
                 </>
               ) : (
                 <>
-                  {" "}
                   <option value="USER">User</option>
                   <option value="ADMIN">Admin</option>
                 </>

@@ -27,7 +27,7 @@ const DisplayModelUser = () => {
         Thêm Người Dùng
       </NavLink>
       <Modal
-        title="Thêm Người Dùng"
+        title="update Người Dùng"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

@@ -5,7 +5,7 @@ import { userService } from "../../services/userService";
 
 export const getAllUser = createAsyncThunk("users/getAllUser", async () => {
   const res = await adminUser.user();
-  console.log("res", res);
+  // console.log("res", res);
   return res.data.content;
 });
 export const getAllLocation = createAsyncThunk(

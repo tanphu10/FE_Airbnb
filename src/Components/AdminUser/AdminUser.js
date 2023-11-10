@@ -22,18 +22,18 @@ const AdminUser = () => {
       render: (text) => <p>{text}</p>,
     },
     {
-      title: "Họ Tên",
+      title: "Name",
       dataIndex: "full_name",
       key: "full_name",
       render: (text) => <p>{text}</p>,
     },
     {
-      title: "Ngày Sinh",
+      title: "Birthday",
       dataIndex: "birth_day",
       key: "birthday",
     },
     {
-      title: "Giới Tính",
+      title: "gender",
       dataIndex: "gender",
       key: "gender",
       render: (text) => <p>{text ? "NAM" : "NU"}</p>,
@@ -44,7 +44,12 @@ const AdminUser = () => {
       key: "email",
     },
     {
-      title: "Quyền",
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Role",
       key: "role",
       dataIndex: "role",
       render: (text, record, index) => (
@@ -77,6 +82,7 @@ const AdminUser = () => {
           <button
             onClick={() => {
               document.getElementById("RegisterUserId").click();
+              // console.log(record);
               btnSua(record);
             }}
             className="text-white bg-yellow-300 py-2 px-3 rounded-lg hover:bg-yellow-400 duration-500 "
@@ -87,7 +93,7 @@ const AdminUser = () => {
       ),
     },
   ];
-  console.log("columns", columns);
+  // console.log("columns", columns);
   const [timKiem, setTimKiem] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,7 +105,7 @@ const AdminUser = () => {
     adminUser
       .adminUserXoa(data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         alert(`Xóa thành công user id:${data}`);
         dispatch(getAllUser());
       })
@@ -117,7 +123,7 @@ const AdminUser = () => {
   let newUser = User.map((item, index) => {
     return { ...item, key: index + 1 };
   });
-  console.log("newUser", newUser);
+  // console.log("newUser", newUser);
   const { Search } = Input;
 
   const onSearch = (value) => {

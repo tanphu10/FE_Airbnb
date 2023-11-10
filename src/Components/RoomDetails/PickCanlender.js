@@ -21,7 +21,7 @@ const { RangePicker } = DatePicker;
 const PickCanlender = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
-  const nguoiDung = layDuLieuLocal("user").content;
+  const nguoiDung = layDuLieuLocal("user")?.content;
   // console.log("nguoiDung", nguoiDung);
 
   const [date, setDate] = useState([]);
@@ -29,8 +29,8 @@ const PickCanlender = (props) => {
   const date1 = dayjs(date[0]);
   const date2 = dayjs(date[1]);
   const totalDate = date2.diff(date1, "day", true);
-  console.log(date1);
-  console.log(totalDate);
+  // console.log(date1);
+  // console.log(totalDate);
   return (
     // <form onSubmit={handleSubmit}>
     <div>
@@ -50,6 +50,13 @@ const PickCanlender = (props) => {
         />
       </div>
       <div className="relative z-0 w-full my-5 group">
+        <h3 className="text-orange-600">
+          phòng có tối đa : {""}
+          <span className="text-neutral-700 ">{props.guest} khách</span>
+        </h3>
+      </div>
+      <div className="relative z-0 w-full my-5 group">
+        {/* <h3>phòn</h3> */}
         <input
           type="text"
           id="guestNumber"

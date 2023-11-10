@@ -23,12 +23,13 @@ const AddComment = () => {
 
   const dispatch = useDispatch();
   const { arrComment } = useSelector((state) => state.commentUser);
+  console.log("addComment",arrComment)
   const { getUser } = useSelector((state) => state.adminUser);
   const params = useParams();
   const [comment, setComment] = useState();
   useEffect(() => {
     async function fetchData() {
-      await dispatch(getAllCommentApi());
+      // await dispatch(getAllCommentApi());
       await dispatch(getCommentRoom(params.id));
       // await dispatch(getInfoUserApi(maNguoiDung));
     }

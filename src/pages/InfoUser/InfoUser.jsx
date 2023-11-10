@@ -19,7 +19,7 @@ import EditBookedRoom from "../../Components/FormUpdateInfoUser/EditBookRoom/Edi
 import { DOMAIN_BE_IMG } from "../../util/constants";
 
 const InfoUser = () => {
-  const maNguoiDung = layDuLieuLocal("user").content.user?.id;
+  const maNguoiDung = layDuLieuLocal("user")?.content.user?.id;
   // console.log(maNguoiDung);
   const [data, setData] = useState();
   // console.log(data);

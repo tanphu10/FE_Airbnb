@@ -22,7 +22,7 @@ const AfterRegister = () => {
   const { inFo } = useSelector((state) => state.user);
   // console.log("inFo", inFo);
   useEffect(() => {
-    const nguoiDung = layDuLieuLocal("user").content?.user?.id;
+    const nguoiDung = layDuLieuLocal("user")?.content?.user?.id;
     // console.log("nguoiDung", nguoiDung);
     if (nguoiDung) {
       dispatch(getInfoUserApi(nguoiDung));

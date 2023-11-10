@@ -17,19 +17,33 @@ import { date } from "yup";
 import {
   findRoomUser,
   getAllCommentApi,
+  getCommentRoom,
 } from "../../redux/slices/commentUserSlice";
 import { getAllUser } from "../../redux/slices/adminUserSlices";
 import AddComment from "./Comment/AddComment";
 import { DOMAIN_BE_IMG } from "../../util/constants";
 const RoomDetails = () => {
   const dispatch = useDispatch();
-  const { room } = useSelector((state) => state.room);
-  // console.log(room);
   const params = useParams();
+  const { room } = useSelector((state) => state.room);
+  const { arrComment } = useSelector((state) => state.commentUser);
+  // console.log(arrComment);
+
+  // if (arrComment.length > 0) {
+  let totalRate = arrComment.reduce((total, item, index) => {
+    return (total += item.rate);
+  }, 0);
+  // console.log("totalRate", totalRate / 10);
+  let averageRate = (totalRate / arrComment.length).toFixed(1);
+  // console.log("averageRate", averageRate);
+  // }else{
+  //   return " chưa có đánh giá"
+  // }
   useEffect(() => {
     dispatch(getDetailRoomAPI(params.id));
     dispatch(getAllCommentApi());
     dispatch(getAllUser());
+    dispatch(getCommentRoom(params.id));
   }, []);
   const {
     name_room,
@@ -64,9 +78,10 @@ const RoomDetails = () => {
           <div className="sub_title laptop:flex justify-between items-center laptop:text-[16px] mobile:text-[14px] text-[14px]">
             <div className="sub_title_left flex items-center gap-3">
               <span className="flex items-center">
-                <AiFillStar className="mr-2" />4
+                <AiFillStar className="mr-2" />
+                {averageRate ? averageRate : "chưa có đánh giá"}
               </span>
-              <span className="underline">99 đánh giá </span>
+              <span className="underline">{arrComment.length}đánh giá </span>
               <span className="flex items-center">
                 <FaAward className="mr-2" />
                 Chủ nhà siêu cấp
@@ -297,7 +312,7 @@ const RoomDetails = () => {
                       </p>
                     </div> */}
                     <div id="Calender">
-                      <PickCanlender giaTien={price} />
+                      <PickCanlender giaTien={price} guest={guest} />
                     </div>
                   </div>
                 </div>
@@ -310,8 +325,12 @@ const RoomDetails = () => {
                 <div>
                   <i className="fa-solid fa-star"></i>
                 </div>
-                <div className="ml-2">4 .</div>
-                <div className="ml-2">82 đánh giá của người dùng</div>
+                <div className="ml-2">
+                  rate: {averageRate ? averageRate : "chưa có đánh giá"}
+                </div>
+                <div className="ml-2">
+                  {arrComment.length} đánh giá của người dùng
+                </div>
               </h2>
             </div>
 
@@ -362,7 +381,7 @@ const RoomDetails = () => {
               <div className="user_vote_items flex justify-between items-center">
                 <div className="w-full text-base tracking-wide">Nhận Phòng</div>
                 <div className="w-1/2 flex justify-between items-center">
-                  <div className="w-full bg-gray-200 rounded-full h-1">
+                  <div className="w-full bg-gray-200rounded-full h-1">
                     <div className="bg-gray-800 h-1 rounded-full w-full"></div>
                   </div>
                   <div className="ml-4">5,0</div>

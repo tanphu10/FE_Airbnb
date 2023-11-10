@@ -9,7 +9,7 @@ export const getAllRoomAPI = createAsyncThunk(
   "room/getAllRoomAPI",
   async () => {
     const res = await roomServ.getAllRoom();
-    // console.log(res);
+    console.log(res);
     return res.data.content;
   }
 );
