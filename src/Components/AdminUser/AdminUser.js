@@ -100,6 +100,7 @@ const AdminUser = () => {
   const User = useSelector((state) => {
     return state.adminUser.userValue;
   });
+  // console.log(User);
   const btnXoa = (data) => {
     console.log(data);
     adminUser
@@ -118,7 +119,9 @@ const AdminUser = () => {
     navigate(`/admin/user/${data.id}`);
   };
   useEffect(() => {
-    dispatch(getAllUser());
+    if (!User.length > 0) {
+      dispatch(getAllUser());
+    }
   }, []);
   let newUser = User.map((item, index) => {
     return { ...item, key: index + 1 };

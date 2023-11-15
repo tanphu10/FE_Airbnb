@@ -24,14 +24,13 @@ const InfoUser = () => {
   const [data, setData] = useState();
   // console.log(data);
   const dispatch = useDispatch();
-  const { controlRoom } = useSelector((state) => state.room);
   // console.log(controlRoom);
   useEffect(() => {
     dispatch(getAllUser());
     dispatch(getAllRoomAPI());
     dispatch(getRoomUserBookedApi(maNguoiDung));
-    dispatch(getInfoUserApi(maNguoiDung));
   }, []);
+  // const { controlRoom } = useSelector((state) => state.room);
   // console.log(arrayRoom);
   // console.log("controlRoom", controlRoom);
   // console.log(maNguoiDung);
@@ -47,7 +46,7 @@ const InfoUser = () => {
     setData(file);
   };
   const { getUser } = useSelector((state) => state.adminUser);
-  // console.log("getUser", getUser);
+  console.log("getUser", getUser);
   return (
     <Fragment>
       <div className="border-b" style={{ margin: "100px 10px 0 10px" }}>
@@ -171,11 +170,13 @@ const DisplayRoomBooked = (props) => {
     }
   };
   const getNameRoom = (maPhong) => {
+    // console.log(maPhong);
     let value = arrRenderItem.find((items) => {
       return maPhong == items.id;
     });
+    // console.log(value);
     if (value) {
-      return value.tenPhong;
+      return value.name_room;
     }
   };
   if (controlRoom != null) {
@@ -296,13 +297,9 @@ const DisplayRoomBooked = (props) => {
 
 const FormUpdateBookRoom = (props) => {
   const { id, maNguoiDung } = props;
-  // console.log(id);
   const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
   const maUser = layDuLieuLocal("user").content.user;
-  console.log(maUser);
-  const { controlRoom } = useSelector((state) => state.room);
-  // console.log("controlRoom", controlRoom);
   const cancel = (e) => {
     // console.log(e);
     message.error("Click on No");

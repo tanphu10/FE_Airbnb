@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 import * as welcome from "./../../assets/animation/welcom.json";
 const AdminStandar = () => {
   const admin = layDuLieuLocal("user").content;
-  console.log(admin);
+  // console.log(admin);
   useEffect(() => {
     if (admin?.user.role != "ADMIN" || admin == null) {
       window.location.href = "https://google.com.vn";

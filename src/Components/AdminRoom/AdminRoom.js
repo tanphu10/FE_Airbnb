@@ -258,8 +258,12 @@ const AdminRoom = () => {
   });
 
   useEffect(() => {
-    dispatch(getAllLocation());
-    dispatch(getAllRoomAPI());
+    if (!arrRoom.length > 0) {
+      dispatch(getAllRoomAPI());
+    }
+    if (!vitri.length > 0) {
+      dispatch(getAllLocation());
+    }
   }, []);
   return (
     <div className="content_room">

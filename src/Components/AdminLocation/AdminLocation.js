@@ -97,7 +97,9 @@ const AdminLocation = () => {
     navigate(`/admin/location/${data.id}`);
   };
   useEffect(() => {
-    dispatch(getAllLocation());
+    if (!User.length > 0) {
+      dispatch(getAllLocation());
+    }
   }, []);
   let newUser = User.map((item, index) => {
     return { ...item, key: index + 1 };

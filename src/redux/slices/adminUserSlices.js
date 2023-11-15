@@ -5,7 +5,7 @@ import { userService } from "../../services/userService";
 
 export const getAllUser = createAsyncThunk("users/getAllUser", async () => {
   const res = await adminUser.user();
-  // console.log("res", res);
+  console.log("res", res);
   return res.data.content;
 });
 export const getAllLocation = createAsyncThunk(
@@ -72,7 +72,6 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllUser.fulfilled, (state, action) => {
       state.userValue = action.payload;
-      // console.log(state.userValue);
     });
     builder.addCase(getAllUser.rejected, (state, action) => {
       state.userValue = [
@@ -84,7 +83,6 @@ const userSlice = createSlice({
     });
     builder.addCase(getAllLocation.fulfilled, (state, action) => {
       state.vitri = action.payload;
-      // console.log("state: ", state);
     });
     builder.addCase(getAllLocation.rejected, (state, action) => {
       state.vitri = [];

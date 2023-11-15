@@ -7,11 +7,12 @@ import Loading from "../pages/Loading/Loading";
 
 const UserTemplate = () => {
   const { isLoading } = useSelector((state) => state.loading);
+ 
   return (
     <Fragment>
       {isLoading ? <Loading /> : <></>}
       <div id="hihi" className=" flex flex-col min-h-full  justify-between">
-        <Header />
+        <Header  />
         <Outlet />
         <Footer />
       </div>

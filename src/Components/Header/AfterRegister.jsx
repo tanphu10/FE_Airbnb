@@ -3,6 +3,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   FolderOpenOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -20,10 +21,8 @@ const AfterRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { inFo } = useSelector((state) => state.user);
-  // console.log("inFo", inFo);
   useEffect(() => {
     const nguoiDung = layDuLieuLocal("user")?.content?.user?.id;
-    // console.log("nguoiDung", nguoiDung);
     if (nguoiDung) {
       dispatch(getInfoUserApi(nguoiDung));
     }
@@ -51,6 +50,9 @@ const AfterRegister = () => {
       // console.log("chuyển đến home");
     }
   };
+  const chatMessage = () => {
+    navigate("/chat");
+  };
   const items = [
     {
       label: <NavLink to={"/infouser"}>Thông tin người dùng</NavLink>,
@@ -64,8 +66,14 @@ const AfterRegister = () => {
       onClick: displayQuanTri,
     },
     {
-      label: "Đăng Xuất",
+      label: "Message",
       key: "3",
+      icon: <MessageOutlined />,
+      onClick: chatMessage,
+    },
+    {
+      label: "Đăng Xuất",
+      key: "4",
       icon: <LogoutOutlined />,
       onClick: logOut,
     },

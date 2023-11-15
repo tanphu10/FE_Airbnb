@@ -1,4 +1,4 @@
-    ghi chú về dự án movie
+    ghi chú về dự án air bnb
 
 các thư mục cần tạo
 -component

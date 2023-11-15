@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./ProductRoom.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoomAPI } from "../../redux/slices/roomSLices";
@@ -23,42 +23,20 @@ import {
 import { DOMAIN_BE_IMG } from "../../util/constants";
 // import { click } from "@testing-library/user-event/dist/click";
 
-const breakPoints = [
-  { width: 1, itemsToShow: 1 },
-  { width: 550, itemsToShow: 1, itemsToScroll: 1 },
-  { width: 768, itemsToShow: 1 },
-  { width: 1200, itemsToShow: 1 },
-];
-
 const ProductRoom = () => {
-  const maNguoiDung = layDuLieuLocal("user")?.content?.user?.id;
-  // console.log(maNguoiDung);
   const dispatch = useDispatch();
   const { arrayRoom } = useSelector((state) => state.room);
   const { arrCommentMaPhong } = useSelector((state) => state.commentUser);
-  // console.log(arrayRoom);
-  // console.log(arrCommentMaPhong);
-  // const { inFo } = useSelector((state) => state.user);
-  //   console.log("room: ", room);
-  // const checkLogin = () => {
-  //   if (inFo == null) {
-  //     document.getElementById("SignIn").click();
-  //   }else {
-  //     // to = {`/details/${id}`}
-  //   }
-  // }
 
   const getRate = (id) => {
     let arr = [];
-    let value = arrCommentMaPhong.find((item) => {
-      // return id == item.room_id;
+    arrCommentMaPhong.find((item) => {
       if (id == item.room_id) {
         arr.push(item);
       }
     });
-    // console.log("arr", arr);
     if (arr) {
-      let totalRate = arr.reduce((total, item, index) => {
+      let totalRate = arr?.reduce((total, item, index) => {
         return (total += item.rate);
       }, 0);
       return (totalRate / arr.length).toFixed(1);
@@ -67,62 +45,70 @@ const ProductRoom = () => {
   useEffect(() => {
     dispatch(set_loading_started());
     dispatch(set_loading_end());
-    dispatch(getAllRoomAPI());
-    dispatch(getAllCommentApi());
-
-    dispatch(getInfoUserApi(maNguoiDung));
+    if (!arrayRoom.length > 0) {
+      dispatch(getAllRoomAPI());
+    }
+    if (!arrCommentMaPhong.length > 0) {
+      dispatch(getAllCommentApi());
+    }
   }, []);
 
   return (
-    <div className="grid laptop:grid-cols-2 p-5 gap-11 " id="Product">
-      {arrayRoom.map(({ name_room, price, photo, id }, index) => {
-        return (
-          <div className="product_item" key={index}>
-            {/* <Carousel breakPoints={breakPoints}>
-              <img width={"500px"} height={"350px"} src={hinhAnh} alt="" />
-              <img width={"500px"} height={"350px"} src={hinhAnh} alt="" />
-            </Carousel> */}
-            <div className="image_item ">
-              <img
-                width={"500px"}
-                height={"350px"}
-                src={DOMAIN_BE_IMG + photo}
-                alt=""
-              />
-            </div>
-            <AiFillHeart className="heart text-xl hover:text-orange-500 " />
-            <div className="sub_title">
-              <div className="name_price laptop:flex mt-2 ml-2">
-                <h3 className="">
-                  <span className="font-bold mobile:text-[14px] text-[16px]">
-                    Tên phòng :
-                  </span>{" "}
-                  {name_room}
-                </h3>
+    <Fragment>
+      <div className="grid laptop:grid-cols-2 p-5 gap-11 " id="Product">
+        {arrayRoom.length > 0 ? (
+          arrayRoom.map(({ name_room, price, photo, id }, index) => {
+            return (
+              <div className="product_item" key={index}>
+                <div className="image_item ">
+                  <img
+                    width={"500px"}
+                    height={"350px"}
+                    src={DOMAIN_BE_IMG + photo}
+                    alt=""
+                  />
+                </div>
+                <AiFillHeart className="heart text-xl hover:text-orange-500 " />
+                <div className="sub_title">
+                  <div className="name_price laptop:flex mt-2 ml-2">
+                    <h3 className="">
+                      <span className="font-bold mobile:text-[14px] text-[16px]">
+                        Tên phòng :
+                      </span>{" "}
+                      {name_room}
+                    </h3>
 
-                <p className="flex items-center mr-3 ">
-                  <AiTwotoneStar className="icon mr-1 duration-500 cursor-pointer" />{" "}
-                  {getRate(id)}
-                </p>
-              </div>
-              <div className="ml-2 mt-2 laptop:flex items-center justify-between">
-                <p className="desktop:mb-0 laptop:mb-0 mb-5">
-                  <span className="font-bold  ">Giá phòng: </span> ${price}
-                  /đêm
-                </p>
+                    <p className="flex items-center mr-3 ">
+                      <AiTwotoneStar className="icon mr-1 duration-500 cursor-pointer" />{" "}
+                      {getRate(id)}
+                    </p>
+                  </div>
+                  <div className="ml-2 mt-2 laptop:flex items-center justify-between">
+                    <p className="desktop:mb-0 laptop:mb-0 mb-5">
+                      <span className="font-bold  ">Giá phòng: </span> ${price}
+                      /đêm
+                    </p>
 
-                <NavLink
-                  to={`/detail/${id}`}
-                  className="btnChiTiet py-2 px-4 border  duration-500 mr-3 "
-                >
-                  Xem chi tiết
-                </NavLink>
+                    <NavLink
+                      to={`/detail/${id}`}
+                      className="btnChiTiet py-2 px-4 border  duration-500 mr-3 "
+                    >
+                      Xem chi tiết
+                    </NavLink>
+                  </div>
+                </div>
               </div>
-            </div>
+            );
+          })
+        ) : (
+          <div className="flex justify-center">
+            <h2 className="text-center font-medium text-orange-500">
+              không tìm thấy data
+            </h2>
           </div>
-        );
-      })}
-    </div>
+        )}
+      </div>
+    </Fragment>
   );
 };
 

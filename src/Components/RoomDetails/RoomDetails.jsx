@@ -30,7 +30,7 @@ const RoomDetails = () => {
   // console.log(arrComment);
 
   // if (arrComment.length > 0) {
-  let totalRate = arrComment.reduce((total, item, index) => {
+  let totalRate = arrComment?.reduce((total, item, index) => {
     return (total += item.rate);
   }, 0);
   // console.log("totalRate", totalRate / 10);
@@ -40,10 +40,13 @@ const RoomDetails = () => {
   //   return " chưa có đánh giá"
   // }
   useEffect(() => {
-    dispatch(getDetailRoomAPI(params.id));
-    dispatch(getAllCommentApi());
-    dispatch(getAllUser());
-    dispatch(getCommentRoom(params.id));
+    // console.log(room.length);
+    if (!room.length > 0) {
+      dispatch(getDetailRoomAPI(params.id));
+    }
+    // if (!arrComment.length > 0) {
+    //   dispatch(getCommentRoom(params.id));
+    // }
   }, []);
   const {
     name_room,
@@ -312,7 +315,11 @@ const RoomDetails = () => {
                       </p>
                     </div> */}
                     <div id="Calender">
-                      <PickCanlender giaTien={price} guest={guest} />
+                      <PickCanlender
+                        giaTien={price}
+                        guest={guest}
+                        arrComment={arrComment}
+                      />
                     </div>
                   </div>
                 </div>

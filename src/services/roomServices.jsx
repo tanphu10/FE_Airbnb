@@ -15,4 +15,13 @@ export const roomServ = {
   deleteRoom: (id) => {
     return https.delete(`/api/bookroom/${id}`);
   },
+  getTypeRoom: () => {
+    return https.get(`/api/type-room`);
+  },
+  getTypeRoomId: (id) => {
+    return https.get(`/api/type-room/${id}`);
+  },
+  searchRoom: (data) => {
+    return https.get(`/api/room/search/${data}`);
+  },
 };

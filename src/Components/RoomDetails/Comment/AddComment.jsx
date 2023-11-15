@@ -23,17 +23,19 @@ const AddComment = () => {
 
   const dispatch = useDispatch();
   const { arrComment } = useSelector((state) => state.commentUser);
-  console.log("addComment",arrComment)
+  // console.log("addComment",arrComment)
   const { getUser } = useSelector((state) => state.adminUser);
   const params = useParams();
   const [comment, setComment] = useState();
   useEffect(() => {
-    async function fetchData() {
-      // await dispatch(getAllCommentApi());
-      await dispatch(getCommentRoom(params.id));
-      // await dispatch(getInfoUserApi(maNguoiDung));
+    // async function fetchData() {
+    // await dispatch(getAllCommentApi());
+    if (!arrComment.length > 0) {
+      dispatch(getCommentRoom(params.id));
     }
-    fetchData();
+    // await dispatch(getInfoUserApi(maNguoiDung));
+    // }
+    // fetchData();
   }, [comment]);
 
   return (
@@ -166,7 +168,7 @@ const AddComment = () => {
                     // dayjs().format("DD/MM/YYYY");
                     binhLuan.content = document.getElementById("noiDung").value;
                     binhLuan.rate = 0;
-                    console.log(binhLuan);
+                    // console.log(binhLuan);
                     dispatch(postCommentApi(binhLuan));
                     messageApi.success("thêm thành công");
                     setComment(arrComment);

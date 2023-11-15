@@ -5,11 +5,27 @@ import { userService } from "../../services/userService";
 import { set_loading_end, set_loading_started } from "./loadingSlice";
 import { adminUser } from "../../services/adminUser";
 
+export const getApiTypeRoom = createAsyncThunk(
+  "room/getTypeRoomApi",
+  async () => {
+    const res = await roomServ.getTypeRoom();
+    // console.log(res);
+    return res.data.content;
+  }
+);
+export const getApiTypeRoomId = createAsyncThunk(
+  "room/getTypeRoomApiId",
+  async (id) => {
+    const res = await roomServ.getTypeRoomId(id);
+    // console.log(res);
+    return res.data.content;
+  }
+);
 export const getAllRoomAPI = createAsyncThunk(
   "room/getAllRoomAPI",
   async () => {
     const res = await roomServ.getAllRoom();
-    console.log(res);
+    // console.log(res);
     return res.data.content;
   }
 );
@@ -38,6 +54,15 @@ export const putBookedRoomApi = createAsyncThunk(
     return res.data.content;
   }
 );
+export const searchRoomApi = createAsyncThunk(
+  "room/searchRoomApi",
+  async (data) => {
+    console.log(data);
+    const res = await roomServ.searchRoom(data);
+    console.log(res);
+    return res.data.content;
+  }
+);
 const initialState = {
   arrayRoom: [],
   room: {},
@@ -45,6 +70,7 @@ const initialState = {
   arrRenderItem: [],
   editRoom: [],
   pickCashRenderEdit: [],
+  arrTypeRoom: [],
 };
 export const roomSlice = createSlice({
   name: "room",
@@ -72,6 +98,19 @@ export const roomSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getApiTypeRoom.fulfilled, (state, action) => {
+      // console.log("action: ", action.payload);
+      state.arrTypeRoom = action.payload;
+      // dispatch(set_loading_end());
+      // console.log(state.arrTypeRoom);
+    });
+    builder.addCase(getApiTypeRoomId.fulfilled, (state, action) => {
+      // console.log("action: ", action.payload);
+      state.arrayRoom = action.payload;
+      // dispatch(set_loading_end());
+      // console.log("arrRoom", state.arrayRoom);
+    });
+
     builder.addCase(getAllRoomAPI.fulfilled, (state, action) => {
       // console.log("action: ", action.payload);
       state.arrayRoom = action.payload;
@@ -81,22 +120,32 @@ export const roomSlice = createSlice({
     // builder.addCase(getAllRoomAPI.pending, (state, action) => {
     //   dispatch(set_loading_started());
     // });
+
+    builder.addCase(searchRoomApi.fulfilled, (state, action) => {
+      state.arrayRoom = [];
+      state.arrayRoom = action.payload;
+    });
+
     builder.addCase(getDetailRoomAPI.fulfilled, (state, action) => {
       state.room = action.payload;
     });
     builder.addCase(getRoomUserBookedApi.fulfilled, (state, action) => {
       state.arrRenderItem = [];
+      // console.log(state.arrRenderItem);
       state.controlRoom = action.payload;
-      console.log(action.payload);
-      // console.log("controlRoom", controlRoom);
+      // console.log(action.payload);
+      // console.log("controlRoom", state.controlRoom);
       state.controlRoom?.map((control) => {
+        // console.log(control);
         state.arrayRoom?.map((room) => {
-          if ((control.room_id = room.id)) {
+          // console.log(room);
+          if (control.room_id === room.id) {
             state.arrRenderItem.push(room);
           }
         });
       });
-      console.log(state.arrRenderItem);
+      // console.log("controlRoom", state.controlRoom);
+      // console.log(state.arrRenderItem);
     });
     builder.addCase(putBookedRoomApi.fulfilled, (state, action) => {
       // console.log("action.payload: ", action.payload);

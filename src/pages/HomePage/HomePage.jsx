@@ -10,7 +10,7 @@ const HomePage = () => {
         <div>
           <Banner />
         </div>
-        <div className="my-10">
+        <div className="my-5">
           <ProductRoom />
         </div>
       </div>

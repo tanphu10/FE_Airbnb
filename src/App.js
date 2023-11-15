@@ -16,6 +16,7 @@ import Loading from "./pages/Loading/Loading";
 import InfoUser from "./pages/InfoUser/InfoUser";
 import FormAdminLocation from "./Components/FormAdminLocation/FormAdminLocation";
 import AdminRent from "./Components/AdminRent/AdminRent";
+import Chat from "./pages/Chats/Chat";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/infouser" element={<InfoUser />} />
+          <Route path="/chat" element={<Chat />} />
         </Route>
 
         <Route path="/admin-login" element={<AdminLogin />} />

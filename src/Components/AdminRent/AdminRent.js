@@ -116,7 +116,9 @@ const AdminRent = () => {
     navigate(`/admin/rent/${data.id}`);
   };
   useEffect(() => {
-    dispatch(getAllRent());
+    if (!rent.length > 0) {
+      dispatch(getAllRent());
+    }
   }, []);
   // console.log(rent);
   let newRent = rent?.map((item, index) => {
